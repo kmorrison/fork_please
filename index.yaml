@@ -14,3 +14,8 @@ indexes:
   properties:
   - name: event_name
   - name: name
+
+- kind: Attendee
+  ancestor: yes
+  properties:
+  - name: name

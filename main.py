@@ -15,6 +15,7 @@ from wtforms.validators import DataRequired
 from google.appengine.api import users
 from google.appengine.api import memcache
 from werkzeug import secure_filename
+from google.appengine.ext import ndb
 
 from util import login
 import models
@@ -60,6 +61,9 @@ class ToggleForm(Form):
     )
     is_checked = BooleanField()
 
+def _make_ancestor_key(event_slug):
+    return ndb.Key("Event", event_slug)
+
 def upsert_event(name):
     event_slug = slugify.slugify(name)
     event = models.Event.get_or_insert(
@@ -67,17 +71,18 @@ def upsert_event(name):
         name=name,
         slug=event_slug,
     )
-    event.name = name
     event.put()
     return event
 
+
 def upsert_attendee(event_name, attendee_name):
-    attendee = models.Attendee.get_or_insert(
-        event_name + '=' + attendee_name,
+    attendee = models.Attendee(
+        parent=_make_ancestor_key(event_name),
         name=attendee_name,
         event_name=event_name,
     )
     attendee.put()
+    return attendee
 
 
 @app.route('/', methods=('GET',))
@@ -120,7 +125,9 @@ def upload():
 @login.login_required
 @login.company_login_required
 def event_page(event_slug):
-    attendees = models.Attendee.query(models.Attendee.event_name==event_slug).order(models.Attendee.name).fetch()
+    attendees = models.Attendee.query(
+        ancestor=_make_ancestor_key(event_slug),
+    ).order(models.Attendee.name).fetch()
     total_attendees = len(attendees)
     checked_attendees = sum(attendee.is_checked for attendee in attendees)
     return flask.render_template(
