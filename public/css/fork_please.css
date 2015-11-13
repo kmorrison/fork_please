@@ -61,10 +61,15 @@ header h1 a:hover {
 
 .search-group {
   float: left;
-  width: 89%;
+  width: 87%;
 }
 
 .sort {
   float: right;
-  width: 10%;
+  width: 12%;
+}
+
+.upload-form {
+  background: rgba(255, 255, 255, .75);
+  padding: 20px;
 }
