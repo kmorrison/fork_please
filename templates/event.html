@@ -1,13 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table class="table"
+<table class="table">
+<tbody class="list">
+<form method="POST" action="/event/toggle_attendance/">
+{{ toggle_form.csrf_token }}
 {% for attendee in attendees %}
 <tr>
+    <input type="hidden" name="name" value="{{attendee.name}}"/>
+    <input type="hidden" name="event" value="{{event_slug}}"/>
     <td>{{attendee.name}}</td>
-    <td>{{attendee.is_checked}}</td>
+    <td>
+        {% if attendee.is_checked %}
+        <button type="submit" name="is_checked" value="false" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-ok"></span>
+        </button>
+        {% else %}
+        <button type="submit" name="is_checked" value="true" class="btn btn-default btn-xs">
+          <span class="glyphicon glyphicon-unchecked"></span>
+        </button>
+        {% endif %}
+    </td>
     <td>{{attendee.is_imprompto}}</td>
 </tr>
 {% endfor %}
+</form>
+</tbody>
 </table>
 {% endblock %}
