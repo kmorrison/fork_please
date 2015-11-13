@@ -6,13 +6,13 @@
 <button class="sort" data-sort="name">
 Sort by name
 </button>
-<table class="table">
-<tbody class="list">
 <form method="POST" action="/event/toggle_attendance/">
 {{ toggle_form.csrf_token }}
+<table class="table">
+<tbody class="list">
 {% for attendee in attendees %}
 <tr>
-    <input type="hidden" name="name" value="{{attendee.name}}"/>
+    <input type="hidden" name="attendee_name" value="{{attendee.name}}"/>
     <input type="hidden" name="event" value="{{event_slug}}"/>
     <td class="name">{{attendee.name}}</td>
     <td>
@@ -29,8 +29,8 @@ Sort by name
     <td>{{attendee.is_imprompto}}</td>
 </tr>
 {% endfor %}
-</form>
 </tbody>
 </table>
+</form>
 </div>
 {% endblock %}

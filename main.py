@@ -54,7 +54,7 @@ class EventUploadForm(Form):
 class ToggleForm(Form):
 
     event = StringField('Event Name', validators=[DataRequired()])
-    name = StringField(
+    attendee_name = StringField(
         'Name',
     )
     is_checked = BooleanField()
@@ -137,7 +137,7 @@ def toggle_attendance():
     if form.validate_on_submit():
         attendees = models.Attendee.query(
             models.Attendee.event_name == form.event.data,
-            models.Attendee.name == form.name.data,
+            models.Attendee.name == form.attendee_name.data,
         ).fetch()
         attendee = attendees[0]
         attendee.is_checked = form.is_checked.data
