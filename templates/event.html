@@ -2,42 +2,52 @@
 
 {% block content %}
 <div id="attendees">
-<div id="headcount-display">Headcount: {{checked_attendees}} / {{total_attendees}}</div>
-<input class="search" placeholder="Search" />
-<button class="sort" data-sort="name">
-Sort by name
-</button>
-<table class="table">
-<tbody class="list">
-{% for attendee in attendees %}
-<tr>
-    <td class="name">{{attendee.name}}</td>
-    <td>
-    <form method="POST" action="/event/toggle_attendance/">
-    <input type="hidden" name="attendee_name" value="{{attendee.name}}"/>
-    <input type="hidden" name="event" value="{{event_slug}}"/>
-    {{ toggle_form.csrf_token }}
-        {% if attendee.is_checked %}
-        <button type="submit" name="is_checked" value="false" class="btn btn-default btn-xs">
-          <span class="glyphicon glyphicon-ok"></span>
-        </button>
-        {% else %}
-        <button type="submit" name="is_checked" value="true" class="btn btn-default btn-xs">
-          <span class="glyphicon glyphicon-unchecked"></span>
-        </button>
-        {% endif %}
-    </form>
-    </td>
-    <td>
-        {% if attendee.is_impromptu %}
-          <span class="glyphicon glyphicon-sunglasses"></span>
-        {% else %}
-          <span class="glyphicon glyphicon-envelope"></span>
-        {% endif %}
-    </td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+  <h4><div id="headcount_display">Headcount: {{checked_attendees}} / {{total_attendees}}</div></h4>
+
+  <div class="form-functions">
+    <div class="input-group search-group">
+      <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+      <input type="text" class="form-control search" placeholder="Search">
+    </div>
+
+    <button class="btn btn-primary sort" data-sort="name">Sort by name</button>
+
+    <p class="clear"></p>
+  </div>
+
+  <table class="table">
+    <tbody class="list">
+      {% for attendee in attendees %}
+      <tr>
+        <td class="name">{{attendee.name}}</td>
+        <td width="40px">
+          <form method="POST" action="/event/toggle_attendance/">
+            <input type="hidden" name="attendee_name" value="{{attendee.name}}"/>
+            <input type="hidden" name="event" value="{{event_slug}}"/>
+
+            {{ toggle_form.csrf_token }}
+
+            {% if attendee.is_checked %}
+              <button type="submit" name="is_checked" value="false" class="btn btn-default btn-xs">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+              {% else %}
+              <button type="submit" name="is_checked" value="true" class="btn btn-default btn-xs">
+                <span class="glyphicon glyphicon-unchecked"></span>
+              </button>
+            {% endif %}
+          </form>
+        </td>
+        <td width="40px">
+          {% if attendee.is_impromptu %}
+            <span class="glyphicon glyphicon-sunglasses"></span>
+          {% else %}
+            <span class="glyphicon glyphicon-envelope"></span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

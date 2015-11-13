@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  border: 1px solid #e5e5e1;
+  background: none;
   border-radius: 5px;
   padding: 20px;
 }
@@ -37,7 +37,34 @@ header h1 a:hover {
   text-decoration: none;
 }
 
+.clear {
+  clear: both;
+}
+
+.table {
+  background: rgba(255, 255, 255, .75);
+}
+
 #upload {
   margin: 0;
   float: right;
+}
+
+#headcount_display {
+  text-align: right;
+}
+
+.content {
+  border-top: 1px solid #e5e5e1;
+  clear: both;
+}
+
+.search-group {
+  float: left;
+  width: 89%;
+}
+
+.sort {
+  float: right;
+  width: 10%;
 }
