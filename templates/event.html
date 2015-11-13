@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div id="attendees">
+<input class="search" placeholder="Search" />
+<button class="sort" data-sort="name">
+Sort by name
+</button>
 <table class="table">
 <tbody class="list">
 <form method="POST" action="/event/toggle_attendance/">
@@ -9,7 +14,7 @@
 <tr>
     <input type="hidden" name="name" value="{{attendee.name}}"/>
     <input type="hidden" name="event" value="{{event_slug}}"/>
-    <td>{{attendee.name}}</td>
+    <td class="name">{{attendee.name}}</td>
     <td>
         {% if attendee.is_checked %}
         <button type="submit" name="is_checked" value="false" class="btn btn-default btn-xs">
@@ -27,4 +32,5 @@
 </form>
 </tbody>
 </table>
+</div>
 {% endblock %}
