@@ -26,7 +26,13 @@ Sort by name
         </button>
         {% endif %}
     </td>
-    <td>{{attendee.is_imprompto}}</td>
+    <td>
+        {% if attendee.is_impromptu %}
+          <span class="glyphicon glyphicon-sunglasses"></span>
+        {% else %}
+          <span class="glyphicon glyphicon-pencil"></span>
+        {% endif %}
+    </td>
 </tr>
 {% endfor %}
 </tbody>
