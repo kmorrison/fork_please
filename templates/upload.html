@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form class="form-inline" method="POST" action="/upload/" enctype="multipart/form-data">
+  {{ form.csrf_token }}
+  {{ form.event_name(class='form-control', size=40, placeholder='Event Name') }}
+  {{ form.names_csv(class='form-control', placeholder='Upload CSV') }}
+  <input type="submit" value="Create Event" class="btn btn-primary">
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table"
+{% for attendee in attendees %}
+<tr>
+    <td>{{attendee.name}}</td>
+    <td>{{attendee.is_checked}}</td>
+    <td>{{attendee.is_imprompto}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
