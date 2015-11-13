@@ -2,20 +2,21 @@
 
 {% block content %}
 <div id="attendees">
+<div id="headcount-display">Headcount: {{checked_attendees}} / {{total_attendees}}</div>
 <input class="search" placeholder="Search" />
 <button class="sort" data-sort="name">
 Sort by name
 </button>
-<form method="POST" action="/event/toggle_attendance/">
-{{ toggle_form.csrf_token }}
 <table class="table">
 <tbody class="list">
 {% for attendee in attendees %}
 <tr>
-    <input type="hidden" name="attendee_name" value="{{attendee.name}}"/>
-    <input type="hidden" name="event" value="{{event_slug}}"/>
     <td class="name">{{attendee.name}}</td>
     <td>
+    <form method="POST" action="/event/toggle_attendance/">
+    <input type="hidden" name="attendee_name" value="{{attendee.name}}"/>
+    <input type="hidden" name="event" value="{{event_slug}}"/>
+    {{ toggle_form.csrf_token }}
         {% if attendee.is_checked %}
         <button type="submit" name="is_checked" value="false" class="btn btn-default btn-xs">
           <span class="glyphicon glyphicon-ok"></span>
@@ -25,18 +26,18 @@ Sort by name
           <span class="glyphicon glyphicon-unchecked"></span>
         </button>
         {% endif %}
+    </form>
     </td>
     <td>
         {% if attendee.is_impromptu %}
           <span class="glyphicon glyphicon-sunglasses"></span>
         {% else %}
-          <span class="glyphicon glyphicon-pencil"></span>
+          <span class="glyphicon glyphicon-envelope"></span>
         {% endif %}
     </td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
-</form>
 </div>
 {% endblock %}

@@ -12,3 +12,7 @@ class Attendee(ndb.Model):
     event_name = ndb.StringProperty(indexed=True)
     is_checked = ndb.BooleanProperty(default=False)
     is_imprompto = ndb.BooleanProperty(default=False)
+
+    @property
+    def cache_key(self):
+        return self.event_name + '=' + self.name

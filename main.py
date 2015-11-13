@@ -13,6 +13,7 @@ from wtforms import BooleanField
 from wtforms import StringField
 from wtforms.validators import DataRequired
 from google.appengine.api import users
+from google.appengine.api import memcache
 from werkzeug import secure_filename
 
 from util import login
